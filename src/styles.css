@@ -1,0 +1,273 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --font-sans: "Manrope", sans-serif;
+  --font-display: "Cormorant Garamond", serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-copy: var(--copy);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-surface-soft: var(--surface-soft);
+  --color-coffee: var(--coffee);
+  --color-olive: var(--olive);
+  --color-stage-dark: var(--stage-dark);
+  --color-fabric-1: var(--fabric-1);
+  --color-fabric-2: var(--fabric-2);
+  --color-fabric-3: var(--fabric-3);
+  --color-fabric-4: var(--fabric-4);
+  --color-fabric-5: var(--fabric-5);
+  --color-fabric-6: var(--fabric-6);
+}
+
+:root {
+  --radius: 1.5rem;
+  /* MAISONNE palette */
+  --background: #FAFAF8;
+  --foreground: #292723;
+  --card: #D9D0C2;
+  --card-foreground: #292723;
+  --popover: #F3F0E9;
+  --popover-foreground: #292723;
+  --primary: #735D4A;
+  --primary-foreground: #F3F0E9;
+  --secondary: #D9D0C2;
+  --secondary-foreground: #292723;
+  --muted: #D9D0C2;
+  --muted-foreground: #7D8171;
+  /* Body copy — darker than muted labels, softer than headings */
+  --copy: #3A3530;
+  --accent: #735D4A;
+  --accent-foreground: #F3F0E9;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: color-mix(in oklab, #7D8171 40%, transparent);
+  --input: color-mix(in oklab, #7D8171 40%, transparent);
+  --ring: #735D4A;
+  --surface-soft: #D9D0C2;
+  --coffee: #735D4A;
+  --olive: #7D8171;
+  /* Pre-footer lifestyle strip — вариант 3: мягкий moss (между оливой и зеленью) */
+  --stage-dark: #3a4a40;
+  --stage-dark-accent: color-mix(in srgb, var(--olive) 52%, #e8ebe6 48%);
+  --fabric-1: oklch(0.83 0.025 75);
+  --fabric-2: oklch(0.69 0.027 72);
+  --fabric-3: oklch(0.49 0.02 65);
+  --fabric-4: oklch(0.75 0.034 76);
+  --fabric-5: oklch(0.52 0.025 112);
+  --fabric-6: oklch(0.61 0.06 42);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --copy: oklch(0.88 0.01 80);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(6.5rem + 2.5rem);
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 0;
+    margin: 0;
+  }
+
+  button, a, input, textarea, select { letter-spacing: 0; }
+
+  .font-display {
+    font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
+    letter-spacing: 0.045em;
+  }
+
+  ::selection { background: var(--accent); color: var(--accent-foreground); }
+}
+
+@utility page-wrap { width: min(100% - 2.5rem, 1400px); margin-inline: auto; }
+@utility section-pad { padding-block: clamp(5rem, 9vw, 9rem); }
+@utility section-pad-compact { padding-block: clamp(2.75rem, 5.5vw, 5rem); }
+@utility no-scrollbar { scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
+@utility text-balance { text-wrap: balance; }
+@utility hero-media-layer {
+  aspect-ratio: 1600 / 1008;
+  min-height: 100%;
+  width: 100%;
+}
+
+@utility hero-header-glass {
+  border: 0;
+  box-shadow: none;
+  background: rgba(245, 241, 234, 0.62);
+  -webkit-backdrop-filter: blur(6px) saturate(1.08);
+  backdrop-filter: blur(6px) saturate(1.08);
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background: color-mix(in srgb, var(--background) 94%, transparent);
+  }
+}
+
+/* Promo bar: Ferm-like — лёгкое стекло, без «плашки» */
+@utility announcement-bar-glass {
+  border-bottom: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
+  background: color-mix(in srgb, var(--background) 52%, transparent);
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  backdrop-filter: blur(8px) saturate(1.05);
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background: color-mix(in srgb, var(--background) 92%, transparent);
+  }
+}
+
+/* Главная: полоска читается отдельно от hero-header-glass */
+@utility announcement-bar-home {
+  border-bottom: 1px solid color-mix(in oklab, var(--olive) 28%, transparent);
+  background: color-mix(in srgb, var(--secondary) 78%, var(--background) 22%);
+  box-shadow: 0 1px 0 color-mix(in oklab, var(--foreground) 6%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(1.04);
+  backdrop-filter: blur(10px) saturate(1.04);
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background: color-mix(in srgb, var(--secondary) 55%, var(--background));
+  }
+}
+@utility product-dot {
+  width: 2.75rem; height: 2.75rem; border-radius: 999px;
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  border: 1px solid color-mix(in oklab, var(--background) 88%, transparent);
+  backdrop-filter: blur(8px); transition: transform .3s ease, background .3s ease;
+  &::after { content: ""; position: absolute; inset: 50% auto auto 50%; width: .42rem; height: .42rem; border-radius: 50%; background: var(--primary); transform: translate(-50%,-50%); }
+  &:hover { transform: scale(1.18); background: color-mix(in oklab, var(--background) 88%, transparent); }
+}
+
+/* Fabric choice: Ferm Living text-image glow (blurred macro behind text column) */
+@utility fabric-choice-text-glow {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  right: -500px;
+  z-index: 0;
+  width: 500px;
+  height: 300px;
+  transform: translateY(-50%);
+  border-radius: 518px;
+  opacity: 0.15;
+  filter: blur(69px);
+  overflow: hidden;
+  background-color: rgb(202 138 85);
+
+  & img {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transform: scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
