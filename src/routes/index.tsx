@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useLocation } from "@tanstack/react-router";
 import { ArrowDown, Package, ShieldCheck, SwatchBook } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CategoryCardsGrid } from "@/components/CategoryCardsGrid";
 import { collections, images } from "@/lib/catalog";
@@ -14,9 +14,9 @@ import { smoothScrollToId } from "@/lib/smooth-scroll";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MAISONNE — дизайнерская мебель для дома" },
-      { name: "description", content: "Диваны, кровати и кресла MAISONNE в спокойном современном дизайне." },
-      { property: "og:title", content: "MAISONNE — дизайнерская мебель для дома" },
+      { title: "Форма — дизайнерская мебель для дома" },
+      { name: "description", content: "Диваны, кровати и кресла Форма в спокойном современном дизайне." },
+      { property: "og:title", content: "Форма — дизайнерская мебель для дома" },
       { property: "og:description", content: "Тактильная мебель для спокойной и красивой жизни." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -28,7 +28,18 @@ export const Route = createFileRoute("/")({
 function Index() {
   const heroRef = useRef<HTMLElement>(null);
   const heroImageRef = useRef<HTMLImageElement>(null);
+  const location = useLocation();
   useHeroParallax(heroRef, heroImageRef);
+
+  useEffect(() => {
+    const hash = location.hash?.replace(/^#/, "") || window.location.hash.replace(/^#/, "");
+    if (hash !== "collections" && hash !== "categories") return;
+
+    const frame = requestAnimationFrame(() => {
+      smoothScrollToId(hash, { durationMs: 720, extraDown: 24 });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [location.pathname, location.hash]);
 
   return (
     <>
@@ -40,7 +51,7 @@ function Index() {
           <img
             ref={heroImageRef}
             src={images.sofa}
-            alt="Светлый диван MAISONNE в тёплом современном интерьере"
+            alt="Светлый диван Форма в тёплом современном интерьере"
             width={1600}
             height={1008}
             decoding="async"
@@ -53,18 +64,18 @@ function Index() {
           aria-hidden
         />
         <div className="page-wrap relative z-10 w-full max-w-2xl md:max-w-3xl">
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-foreground/75">
+          <p className="text-xs font-medium uppercase tracking-[0.06em] text-foreground/75">
             Авторская мебель · Москва
           </p>
-          <h1 className="mt-5 font-display text-[clamp(3.5rem,12vw,8.5rem)] font-medium leading-[0.92] tracking-[0.08em] text-foreground">
-            MAISONNE
+          <h1 className="font-display mt-5 text-[clamp(3.5rem,12vw,8.5rem)] font-medium leading-[0.95] text-foreground md:font-semibold">
+            Форма
           </h1>
           <p className="mt-10 max-w-md text-base leading-relaxed text-foreground/80 md:text-lg">
             Мебель, с которой хочется остаться дома
           </p>
           <a
             href="#categories"
-            className="group mt-10 inline-flex items-center gap-3 rounded-full border border-olive/50 bg-background/40 px-6 py-3 text-sm font-medium tracking-wide text-foreground backdrop-blur-[2px] transition hover:border-olive hover:bg-background/60 hover:text-olive"
+            className="group mt-10 inline-flex items-center gap-3 rounded-full border border-olive/50 bg-background/40 px-6 py-3 text-sm font-medium text-foreground backdrop-blur-[2px] transition hover:border-olive hover:bg-background/60 hover:text-olive"
             onClick={(event) => {
               event.preventDefault();
               smoothScrollToId("categories", { durationMs: 720, extraDown: 24 });
@@ -78,19 +89,23 @@ function Index() {
 
       <CategoryCardsGrid />
 
-      <ScrollReveal as="section" className="section-pad-compact bg-surface-soft">
+      <ScrollReveal
+        as="section"
+        id="collections"
+        className="section-pad-compact scroll-mt-28 bg-surface-soft"
+      >
         <div className="page-wrap">
-          <div className="flex items-center gap-6">
+          <div className="relative z-10 -translate-y-1 flex items-center gap-6 md:-translate-y-1.5">
             <SectionTitle regular="Коллекции" italic="мебели" />
             <span className="hidden h-px flex-1 bg-olive/25 md:block" />
           </div>
-          <div className="mt-8 grid items-center gap-5 md:grid-cols-[1fr_1.16fr_1fr]">
+          <div className="mt-10 grid items-center gap-5 md:grid-cols-[1fr_1.16fr_1fr]">
             {collections.map((collection, i) => (
               <ScrollReveal key={collection.slug} delay={i * 120}>
                 <Link
                   to="/collection/$slug"
                   params={{ slug: collection.slug }}
-                  className={`group relative block overflow-hidden rounded-[26px] ${i === 1 ? "aspect-[4/5] md:-mt-8" : "aspect-[4/4.5]"}`}
+                  className={`group relative block overflow-hidden rounded-[26px] shadow-none transition duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-24px_rgba(41,39,35,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-olive focus-visible:ring-offset-2 focus-visible:ring-offset-surface-soft ${i === 1 ? "aspect-[4/5] md:-mt-5" : "aspect-[4/4.5]"}`}
                 >
                   <img
                     src={collection.image}
@@ -102,12 +117,18 @@ function Index() {
                   />
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-[linear-gradient(to_top,rgba(0,0,0,0.4)_0%,transparent_40%)]"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-[linear-gradient(to_top,rgba(0,0,0,0.4)_0%,transparent_40%)] transition-[height] duration-500 group-hover:h-[42%]"
                   />
-                  <div className="absolute inset-x-0 bottom-0 p-5 md:px-6 md:pb-6 md:pt-10">
-                    <h3 className="font-display text-[clamp(1.875rem,2.8vw,2.25rem)] leading-tight text-[#F5F1EA]">
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-[#F5F1EA]/72 transition-[color] duration-500 group-hover:text-[#F5F1EA]/88 group-focus-visible:text-[#F5F1EA]/88 md:px-6 md:pb-6 md:pt-10">
+                    <h3 className="font-display text-[clamp(1.875rem,2.8vw,2.25rem)] font-medium leading-tight">
                       {collection.name}
                     </h3>
+                    <p className="mt-2 text-sm font-medium leading-relaxed opacity-90 transition-all duration-500 md:mt-0 md:max-h-0 md:overflow-hidden md:opacity-0 md:group-hover:mt-2 md:group-hover:max-h-24 md:group-hover:opacity-100 md:group-focus-visible:mt-2 md:group-focus-visible:max-h-24 md:group-focus-visible:opacity-100">
+                      {collection.tagline}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium uppercase tracking-[0.07em] md:mt-0 md:max-h-0 md:overflow-hidden md:opacity-0 md:transition-all md:duration-500 md:delay-75 md:group-hover:mt-3 md:group-hover:max-h-8 md:group-hover:opacity-100 md:group-focus-visible:mt-3 md:group-focus-visible:max-h-8 md:group-focus-visible:opacity-100">
+                      Смотреть →
+                    </span>
                   </div>
                 </Link>
               </ScrollReveal>
@@ -144,14 +165,14 @@ function Index() {
           </div>
           <ScrollReveal delay={320} className="mt-10">
             <Button variant="warm" size="lg" asChild>
-              <Link to="/about">Узнать больше о MAISONNE</Link>
+              <Link to="/about">Узнать больше о «Форме»</Link>
             </Button>
           </ScrollReveal>
         </div>
         <ScrollReveal delay={120} className="flex justify-center lg:justify-end">
           <img
             src={images.lifestyle}
-            alt="Дом с мебелью MAISONNE"
+            alt="Дом с мебелью Форма"
             loading="lazy"
             width={1200}
             height={1008}

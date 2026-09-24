@@ -3,6 +3,7 @@ import { Heart, Search, ShoppingBag } from "lucide-react";
 import { useEffect, useState, type MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { useShoppingCounts } from "@/hooks/use-shopping-counts";
+import { FurnitureNavDropdown } from "@/components/FurnitureNavDropdown";
 import { smoothScrollToId, smoothScrollToTop } from "@/lib/smooth-scroll";
 
 const SCROLL_THRESHOLD = 16;
@@ -53,7 +54,7 @@ export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
 
   const navLinkClass = (active: boolean) =>
     [
-      "font-sans font-medium uppercase tracking-[0.12em] transition-[color,font-size] duration-300 ease-out",
+      "font-sans font-medium uppercase tracking-[0.06em] transition-[color,font-size] duration-300 ease-out",
       scrolled ? "text-[10px] md:text-[11px]" : "text-[11px] md:text-xs",
       active
         ? "text-olive underline decoration-olive/45 underline-offset-[6px]"
@@ -69,13 +70,6 @@ export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
     if (location.pathname === "/") {
       event.preventDefault();
       smoothScrollToId("contacts", { durationMs: 720, extraDown: 32 });
-    }
-  };
-
-  const goToFurniture = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (location.pathname === "/") {
-      event.preventDefault();
-      smoothScrollToId("categories", { durationMs: 720, extraDown: 24 });
     }
   };
 
@@ -105,24 +99,22 @@ export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
         <Link
           to="/"
           onClick={goHome}
-          className={`w-fit font-sans font-semibold tracking-[0.18em] transition-[font-size,opacity] duration-300 ease-out hover:opacity-60 ${
+          className={`font-logo w-fit font-semibold transition-[font-size,opacity] duration-300 ease-out hover:opacity-60 ${
             scrolled ? "text-[15px]" : "text-[17px] md:text-[18px]"
           }`}
         >
-          MAISONNE
+          Форма
           <span className="relative -top-2 ml-px text-[7px] font-semibold tracking-normal">®</span>
         </Link>
 
         <nav
-          className="flex items-center justify-center gap-4 px-2 md:gap-8 lg:gap-10"
+          className="flex items-center justify-center gap-4 overflow-visible px-2 md:gap-8 lg:gap-10"
           aria-label="Основная навигация"
         >
           <Link to="/about" className={navLinkClass(location.pathname === "/about")}>
             О бренде
           </Link>
-          <Link to="/" onClick={goToFurniture} className={navLinkClass(isFurnitureSection)}>
-            Мебель
-          </Link>
+          <FurnitureNavDropdown navLinkClass={navLinkClass} isFurnitureSection={isFurnitureSection} />
           <Link to="/faq" className={navLinkClass(location.pathname === "/faq")}>
             FAQ
           </Link>

@@ -13,14 +13,14 @@ export const portfolioWorks: PortfolioWork[] = [
   {
     id: "prechestinka",
     image: workLoft,
-    alt: "Светлая гостиная с модульным диваном MAISONNE",
+    alt: "Светлая гостиная с модульным диваном Форма",
     title: "Квартира на Пречистенке",
     meta: "Москва · 2026",
   },
   {
     id: "residence",
     image: workResidence,
-    alt: "Гостиная с изогнутым диваном MAISONNE",
+    alt: "Гостиная с изогнутым диваном Форма",
     title: "Резиденция на озере",
     meta: "Санкт-Петербург · 2025",
   },

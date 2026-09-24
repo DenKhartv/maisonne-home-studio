@@ -20,7 +20,7 @@
 
 @theme inline {
   --font-sans: "Manrope", sans-serif;
-  --font-display: "Cormorant Garamond", serif;
+  --font-display: "Lora", serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -76,7 +76,7 @@
 
 :root {
   --radius: 1.5rem;
-  /* MAISONNE palette */
+  /* Форма palette */
   --background: #FAFAF8;
   --foreground: #292723;
   --card: #D9D0C2;
@@ -84,6 +84,7 @@
   --popover: #F3F0E9;
   --popover-foreground: #292723;
   --primary: #735D4A;
+  --primary-hover: #6B5544;
   --primary-foreground: #F3F0E9;
   --secondary: #D9D0C2;
   --secondary-foreground: #292723;
@@ -181,9 +182,37 @@
 
   button, a, input, textarea, select { letter-spacing: 0; }
 
+  /*
+   * Lora + Manrope (editorial + UI)
+   * .font-display  → Lora — крупные заголовки, hero, секции
+   * .font-accent   → Lora Italic — акцентная строка в заголовках, цитаты
+   * .font-logo     → Manrope — компактный логотип в шапке
+   * body, кнопки, меню, карточки → Manrope (Regular / Medium)
+   */
   .font-display {
     font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
-    letter-spacing: 0.045em;
+    letter-spacing: 0;
+  }
+
+  /* Manrope — логотип «Форма» */
+  .font-logo {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 0;
+  }
+
+  /* Lora Italic — коллекции, цитаты, акценты */
+  .font-accent {
+    font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  /* Manrope Medium + табular nums — цены и размеры */
+  .font-price {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
   }
 
   ::selection { background: var(--accent); color: var(--accent-foreground); }

@@ -18,6 +18,34 @@ export const homeCategories = categories.filter(
   (category) => category.slug !== "tables" && category.slug !== "dressers",
 );
 
+export const homeCategoryShowcase = [
+  {
+    slug: "sofas",
+    name: "Диваны",
+    /** Не hero-sofa: отдельный кадр интерьера с диваном */
+    image: lifestyle,
+    sense: "для отдыха и разговоров",
+    imageClass: "object-cover object-[center_45%]",
+    imageTone: "normal" as const,
+  },
+  {
+    slug: "beds",
+    name: "Кровати",
+    image: bedroom,
+    sense: "для спокойного сна",
+    imageClass: "object-cover object-[center_42%]",
+    imageTone: "normal" as const,
+  },
+  {
+    slug: "armchairs",
+    name: "Кресла",
+    image: chair,
+    sense: "для личного пространства",
+    imageClass: "object-cover object-[center_28%]",
+    imageTone: "dark" as const,
+  },
+] as const;
+
 export const collections = [
   { slug: "puffy", name: "Пуффи", tagline: "Мягкие линии для неспешной жизни", image: sofa },
   { slug: "mellven", name: "Меллвен", tagline: "Естественная форма спокойствия", image: lifestyle },
@@ -50,3 +78,7 @@ export const products: Product[] = [
 export const getCategory = (slug: string) => categories.find((item) => item.slug === slug);
 export const getCollection = (slug: string) => collections.find((item) => item.slug === slug);
 export const getProduct = (slug: string) => products.find((item) => item.slug === slug);
+
+export function countProductsInCategory(categorySlug: string) {
+  return products.filter((product) => product.category === categorySlug).length;
+}

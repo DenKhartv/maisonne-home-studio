@@ -17,7 +17,7 @@ export type InteriorStripProps = {
 export function InteriorStrip({
   eyebrow = "Наши работы",
   title = "Дома, где",
-  italic = "живёт MAISONNE",
+  italic = "живёт Форма",
   description = defaultDescription,
   works = portfolioWorks,
 }: InteriorStripProps) {
@@ -28,13 +28,13 @@ export function InteriorStrip({
       className="section-pad-compact overflow-x-clip bg-stage-dark text-primary-foreground"
     >
       <div className="page-wrap mb-10 grid gap-6 lg:mb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_minmax(0,1fr)] lg:items-start lg:gap-8">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--stage-dark-accent)] lg:pt-1">
+        <p className="text-[0.68rem] font-medium uppercase tracking-[0.08em] text-[var(--stage-dark-accent)] lg:pt-1">
           {eyebrow}
         </p>
-        <h2 className="font-display text-[clamp(2.25rem,5vw,5rem)] font-normal leading-[1.08] tracking-[0.04em]">
+        <h2 className="font-display text-[clamp(2.25rem,5vw,5rem)] font-medium leading-[1.08] md:font-semibold">
           {title}
           <br />
-          <em className="font-normal not-italic text-[var(--stage-dark-accent)]">{italic}</em>
+          <em className="font-accent text-[var(--stage-dark-accent)]">{italic}</em>
         </h2>
         <p className="max-w-[23rem] text-sm leading-7 text-primary-foreground/78 lg:justify-self-end">{description}</p>
       </div>

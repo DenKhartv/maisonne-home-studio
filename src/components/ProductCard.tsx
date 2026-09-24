@@ -34,8 +34,8 @@ export function ProductCard({ product }: { product: Product }) {
         </Button>
       </div>
       <Link to="/product/$slug" params={{ slug: product.slug }} className="mt-4 flex items-baseline justify-between gap-4">
-        <h3 className="font-display text-xl">{product.name}</h3>
-        <p className="shrink-0 text-sm">от {product.price}</p>
+        <h3 className="text-xl font-medium">{product.name}</h3>
+        <p className="font-price shrink-0 text-sm">от {product.price}</p>
       </Link>
     </article>
   );

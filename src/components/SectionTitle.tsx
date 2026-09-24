@@ -1,7 +1,7 @@
 export function SectionTitle({ regular, italic }: { regular: string; italic: string }) {
   return (
-    <h2 className="font-display text-4xl leading-tight tracking-[0.04em] md:text-6xl">
-      {regular} <em className="font-normal text-olive">{italic}</em>
+    <h2 className="font-display text-4xl font-medium leading-tight md:text-6xl md:font-semibold">
+      {regular} <em className="font-accent text-olive">{italic}</em>
     </h2>
   );
 }

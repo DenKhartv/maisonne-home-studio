@@ -3,12 +3,12 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Политика конфиденциальности — MAISONNE" },
+      { title: "Политика конфиденциальности — Форма" },
       {
         name: "description",
-        content: "Как MAISONNE обрабатывает персональные данные и использует cookie.",
+        content: "Как Форма обрабатывает персональные данные и использует cookie.",
       },
-      { property: "og:title", content: "Политика конфиденциальности — MAISONNE" },
+      { property: "og:title", content: "Политика конфиденциальности — Форма" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -19,8 +19,8 @@ export const Route = createFileRoute("/privacy")({
 function PrivacyPage() {
   return (
     <div className="page-wrap min-h-[70vh] pb-32 pt-28 md:pt-36">
-      <p className="text-xs uppercase tracking-[0.18em] text-olive">Документы</p>
-      <h1 className="mt-4 font-display text-5xl md:text-7xl">Политика конфиденциальности</h1>
+      <p className="text-xs font-medium uppercase tracking-[0.08em] text-olive">Документы</p>
+      <h1 className="font-display mt-4 text-5xl font-semibold md:text-7xl">Политика конфиденциальности</h1>
       <div className="mt-10 max-w-2xl space-y-6 text-sm leading-7 text-copy">
         <p>
           Мы используем необходимые cookie для работы сайта и сохранения ваших настроек. Аналитические cookie
