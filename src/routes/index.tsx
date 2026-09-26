@@ -27,9 +27,11 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const heroRef = useRef<HTMLElement>(null);
-  const heroImageRef = useRef<HTMLImageElement>(null);
+  const heroMediaRef = useRef<HTMLDivElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
+  const heroScrimRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  useHeroParallax(heroRef, heroImageRef);
+  useHeroParallax(heroRef, heroMediaRef, heroContentRef, heroScrimRef);
 
   useEffect(() => {
     const hash = location.hash?.replace(/^#/, "") || window.location.hash.replace(/^#/, "");
@@ -47,35 +49,39 @@ function Index() {
         ref={heroRef}
         className="relative flex min-h-svh items-end overflow-hidden pb-16 pt-28 md:items-center md:pb-0 md:pt-0"
       >
-        <div className="hero-media-layer absolute inset-0 overflow-hidden" aria-hidden>
+        <div ref={heroMediaRef} className="hero-media-layer absolute inset-0 overflow-hidden" aria-hidden>
           <img
-            ref={heroImageRef}
             src={images.sofa}
             alt="Светлый диван Форма в тёплом современном интерьере"
             width={1600}
             height={1008}
             decoding="async"
             fetchPriority="high"
-            className="h-full w-full object-cover object-center"
+            className="hero-media-intro h-full w-full object-cover object-center motion-reduce:animate-none"
           />
         </div>
         <div
+          ref={heroScrimRef}
           className="absolute inset-0 bg-gradient-to-r from-background/62 via-background/32 via-50% to-transparent"
           aria-hidden
         />
-        <div className="page-wrap relative z-10 w-full max-w-2xl md:max-w-3xl">
-          <p className="text-xs font-medium uppercase tracking-[0.06em] text-foreground/75">
+        <div
+          className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background/45 to-transparent md:hidden"
+          aria-hidden
+        />
+        <div ref={heroContentRef} className="page-wrap relative z-10 w-full max-w-2xl md:max-w-3xl">
+          <p className="hero-text-intro text-xs font-medium uppercase tracking-[0.06em] text-foreground/75 [animation-delay:340ms] motion-reduce:animate-none">
             Авторская мебель · Москва
           </p>
-          <h1 className="font-display mt-5 text-[clamp(3.5rem,12vw,8.5rem)] font-medium leading-[0.95] text-foreground md:font-semibold">
+          <h1 className="font-display hero-text-intro mt-5 text-[clamp(3.5rem,12vw,8.5rem)] font-medium leading-[0.95] text-foreground [animation-delay:460ms] motion-reduce:animate-none md:font-semibold">
             Форма
           </h1>
-          <p className="mt-10 max-w-md text-base leading-relaxed text-foreground/80 md:text-lg">
+          <p className="hero-text-intro mt-10 max-w-md text-base leading-relaxed text-foreground/80 [animation-delay:700ms] motion-reduce:animate-none md:text-lg">
             Мебель, с которой хочется остаться дома
           </p>
           <a
             href="#categories"
-            className="group mt-10 inline-flex items-center gap-3 rounded-full border border-olive/50 bg-background/40 px-6 py-3 text-sm font-medium text-foreground backdrop-blur-[2px] transition hover:border-olive hover:bg-background/60 hover:text-olive"
+            className="group hero-text-intro mt-10 inline-flex items-center gap-3 rounded-full border border-olive/50 bg-background/40 px-6 py-3 text-sm font-medium text-foreground backdrop-blur-[2px] transition [animation-delay:920ms] hover:border-olive hover:bg-background/60 hover:text-olive motion-reduce:animate-none"
             onClick={(event) => {
               event.preventDefault();
               smoothScrollToId("categories", { durationMs: 720, extraDown: 24 });
