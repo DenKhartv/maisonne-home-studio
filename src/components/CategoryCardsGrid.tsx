@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -62,7 +61,7 @@ export function CategoryCardsGrid() {
                 to="/category/$slug"
                 params={{ slug: cat.slug }}
                 style={transforms[i] ? { transform: transforms[i], willChange: "transform" } : undefined}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-[22px] bg-[#EDE7DC] text-foreground transition-[background-color] duration-300 ease-out hover:bg-[#E8E2D8] md:rounded-[24px]"
+                className="group flex h-full w-full flex-col overflow-hidden rounded-[24px] bg-[#EDE7DC] text-foreground transition-[background-color] duration-500 ease-out hover:bg-[#E8E2D8]"
               >
                 <div
                   className={cn(
@@ -70,28 +69,23 @@ export function CategoryCardsGrid() {
                     cat.slug === "sofas" ? "px-5 md:px-7 lg:px-8" : "px-4 md:px-5 lg:px-6",
                   )}
                 >
-                  <div className="flex items-start justify-between gap-2">
-                    <h3
-                      className={cn(
-                        "font-display font-medium leading-tight",
-                        cat.slug === "sofas"
-                          ? "text-[clamp(1.625rem,2.5vw,2.125rem)]"
-                          : "text-[clamp(1.375rem,2vw,1.625rem)]",
-                      )}
-                    >
-                      {cat.name}
-                    </h3>
+                  <h3
+                    className={cn(
+                      "font-display font-medium leading-tight transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-olive group-focus-visible:text-olive",
+                      cat.slug === "sofas"
+                        ? "text-[clamp(1.625rem,2.5vw,2.125rem)]"
+                        : "text-[clamp(1.375rem,2vw,1.625rem)]",
+                    )}
+                  >
+                    {cat.name}
                     <span
-                      className="grid size-8 shrink-0 place-items-center rounded-full border border-foreground/20 bg-background/30 text-foreground/50 transition duration-300 ease-out group-hover:border-olive group-hover:bg-olive group-hover:text-primary-foreground"
+                      className="ml-1.5 inline-block translate-x-0 text-[0.72em] font-sans font-normal text-olive/70 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:translate-x-[-4px] md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100 md:group-focus-visible:translate-x-0 md:group-focus-visible:opacity-100"
                       aria-hidden
                     >
-                      <ArrowUpRight className="size-3.5 stroke-[2]" />
+                      →
                     </span>
-                  </div>
+                  </h3>
                   <p className="mt-1.5 text-[0.8125rem] leading-snug text-copy">{subtitle}</p>
-                  <span className="mt-2 block overflow-hidden text-[0.6875rem] font-medium uppercase tracking-[0.07em] text-olive transition-all duration-300 ease-out max-h-5 opacity-100 md:max-h-0 md:opacity-0 md:group-hover:max-h-5 md:group-hover:opacity-100 md:group-focus-visible:max-h-5 md:group-focus-visible:opacity-100">
-                    Смотреть коллекцию
-                  </span>
                 </div>
 
                 <div
@@ -104,7 +98,7 @@ export function CategoryCardsGrid() {
                   )}
                 >
                   <div
-                    className="pointer-events-none absolute inset-0 z-10 bg-black/0 transition duration-300 ease-out group-hover:bg-black/12"
+                    className="pointer-events-none absolute inset-0 z-10 bg-black/0 transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-black/[0.08]"
                     aria-hidden
                   />
                   {cat.imageTone === "dark" && (
@@ -121,7 +115,7 @@ export function CategoryCardsGrid() {
                     width={1200}
                     height={1008}
                     className={cn(
-                      "absolute inset-0 h-full w-full transition duration-500 ease-out group-hover:scale-[1.035]",
+                      "absolute inset-0 h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]",
                       cat.imageClass,
                     )}
                   />

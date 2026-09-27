@@ -1,8 +1,10 @@
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
-import { Heart, Search, ShoppingBag } from "lucide-react";
-import { useEffect, useState, type MouseEvent } from "react";
+import { Heart, ShoppingBag } from "lucide-react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
-import { useShoppingCounts } from "@/hooks/use-shopping-counts";
+import { CatalogSearch, CatalogSearchTrigger } from "@/components/CatalogSearch";
+import { useCart } from "@/hooks/use-cart";
+import { useWishlist } from "@/hooks/use-wishlist";
 import { FurnitureNavDropdown } from "@/components/FurnitureNavDropdown";
 import { smoothScrollToId, smoothScrollToTop } from "@/lib/smooth-scroll";
 
@@ -23,9 +25,14 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(88);
+  const headerRef = useRef<HTMLElement>(null);
   const location = useLocation();
   const router = useRouter();
-  const { favoritesCount, cartCount } = useShoppingCounts();
+  const { favorites } = useWishlist();
+  const { count: cartCount } = useCart();
+  const favoritesCount = favorites.length;
   const isHome = location.pathname === "/";
   const atHero = isHome && !scrolled;
 
@@ -50,7 +57,18 @@ export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
 
   useEffect(() => {
     setScrolled(window.scrollY > SCROLL_THRESHOLD);
+    setSearchOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const sync = () => setHeaderHeight(el.getBoundingClientRect().height);
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [scrolled, topOffsetPx]);
 
   const navLinkClass = (active: boolean) =>
     [
@@ -82,6 +100,7 @@ export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
 
   return (
     <header
+      ref={headerRef}
       style={{ top: topOffsetPx }}
       className={`fixed inset-x-0 z-50 transition-[top,background-color,box-shadow,border-color] duration-300 ease-out ${
         atHero
@@ -124,39 +143,37 @@ export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center justify-end gap-0.5 md:gap-1">
-          <Button
-            variant="ghost"
-            size="compactIcon"
-            aria-label="Поиск"
-            title="Поиск"
-            className="hover:bg-olive/10 hover:text-olive"
-          >
-            <Search />
-          </Button>
+          <CatalogSearchTrigger open={searchOpen} onOpenChange={setSearchOpen} />
           <Button
             variant="ghost"
             size="compactIcon"
             aria-label={`Избранное${favoritesCount ? `, ${favoritesCount}` : ""}`}
             title="Избранное"
             className="relative hover:bg-olive/10 hover:text-olive"
-            onClick={() => router.navigate({ to: "/category/$slug", params: { slug: "sofas" } })}
+            onClick={() => router.navigate({ to: "/wishlist" })}
           >
-            <Heart />
+            <Heart className={favoritesCount ? "fill-current" : ""} />
             <IconBadge count={favoritesCount} />
           </Button>
           <Button
             variant="ghost"
             size="compactIcon"
-            aria-label={`Мои заявки${cartCount ? `, ${cartCount}` : ""}`}
-            title="Мои заявки"
+            aria-label={`Корзина${cartCount ? `, ${cartCount}` : ""}`}
+            title="Корзина"
             className="relative hover:bg-olive/10 hover:text-olive"
-            onClick={() => router.navigate({ to: "/category/$slug", params: { slug: "sofas" } })}
+            onClick={() => router.navigate({ to: "/cart" })}
           >
             <ShoppingBag />
             <IconBadge count={cartCount} />
           </Button>
         </div>
       </div>
+      <CatalogSearch
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+        topOffsetPx={topOffsetPx}
+        headerHeight={headerHeight}
+      />
     </header>
   );
 }

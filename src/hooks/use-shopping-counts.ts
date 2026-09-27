@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { getCart, getFavorites, SHOPPING_STORAGE_EVENT } from "@/lib/shopping-storage";
+import { getCartCount, getFavorites, SHOPPING_STORAGE_EVENT } from "@/lib/shopping-storage";
 
 export function useShoppingCounts() {
   const refresh = useCallback(() => {
     setFavoritesCount(getFavorites().length);
-    setCartCount(getCart().length);
+    setCartCount(getCartCount());
   }, []);
 
   const [favoritesCount, setFavoritesCount] = useState(0);

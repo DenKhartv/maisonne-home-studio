@@ -1,0 +1,95 @@
+import { Link } from "@tanstack/react-router";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import { InteriorStrip } from "@/components/InteriorStrip";
+import { getCollectionProducts, type Collection, type Product } from "@/lib/catalog";
+
+type CollectionTemplateProps = {
+  collection: Collection;
+};
+
+export function CollectionTemplate({ collection }: CollectionTemplateProps) {
+  const items = getCollectionProducts(collection.slug);
+
+  return (
+    <>
+      <section className="page-wrap relative mt-24 overflow-hidden rounded-[28px] md:mt-28">
+        <div className="relative h-[66vh] min-h-[520px] md:h-[72vh]">
+          <img
+            src={collection.image}
+            alt={`Коллекция ${collection.name}`}
+            className="h-full w-full object-cover"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-coffee/70 via-coffee/15 to-transparent"
+          />
+          <div className="absolute inset-x-0 bottom-0 p-8 text-primary-foreground md:p-16">
+            <p className="text-xs font-medium uppercase tracking-[0.08em] text-primary-foreground/80">Коллекция</p>
+            <h1 className="font-display mt-4 max-w-[12ch] text-6xl font-medium leading-[0.92] tracking-tight md:text-8xl md:font-semibold">
+              {collection.name}
+            </h1>
+            <p className="mt-5 max-w-xl text-base font-medium leading-relaxed text-primary-foreground/90 md:text-lg">
+              {collection.tagline}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="page-wrap section-pad-compact">
+        <p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">О коллекции</p>
+        <h2 className="font-display mt-5 text-4xl font-medium tracking-tight md:text-6xl md:font-semibold">
+          {collection.name}
+        </h2>
+        <p className="mt-6 max-w-xl text-sm leading-7 text-copy md:text-base md:leading-8">
+          {collection.tagline}
+        </p>
+      </section>
+
+      <section className="page-wrap pb-20 pt-6 md:pb-28 md:pt-10">
+        <h2 className="font-display text-4xl font-medium tracking-tight md:text-6xl md:font-semibold">
+          Предметы коллекции
+        </h2>
+        <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-14 md:mt-14 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
+          {items.map((product) => (
+            <CollectionProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <InteriorStrip title="Аранжировки" italic={collection.name} />
+    </>
+  );
+}
+
+function CollectionProductCard({ product }: { product: Product }) {
+  return (
+    <article className="group relative min-w-0">
+      <div className="relative overflow-hidden rounded-[24px] bg-secondary aspect-[4/3] md:aspect-[5/4]">
+        <Link to="/product/$slug" params={{ slug: product.slug }} aria-label={`Открыть ${product.name}`}>
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+            width={1200}
+            height={1008}
+            className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+          />
+        </Link>
+        <span className="absolute left-4 top-4 rounded-full border border-olive/20 bg-background/80 px-3 py-1.5 text-[10px] tracking-[0.04em] text-olive/90">
+          Доступны разные цвета
+        </span>
+        <FavoriteButton slug={product.slug} name={product.name} />
+      </div>
+      <Link to="/product/$slug" params={{ slug: product.slug }} className="block min-w-0">
+        <h3 className="mt-5 text-xl font-medium leading-snug md:text-2xl">{product.name}</h3>
+        <p className="font-price mt-2 text-sm text-copy">от {product.price}</p>
+        <span className="mt-3 inline-flex items-center text-xs font-medium uppercase tracking-[0.07em] text-muted-foreground transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-focus-visible:translate-x-1">
+          Смотреть
+          <span aria-hidden className="ml-1">
+            →
+          </span>
+        </span>
+      </Link>
+    </article>
+  );
+}

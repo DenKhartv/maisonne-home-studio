@@ -318,6 +318,12 @@
   }
 }
 
+/* Same glow, mirrored: photo on the right, blur sits behind left text */
+@utility fabric-choice-text-glow-from-end {
+  right: auto;
+  left: -500px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }

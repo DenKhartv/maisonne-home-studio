@@ -1,14 +1,16 @@
 import { createFileRoute, Link, useLocation } from "@tanstack/react-router";
-import { ArrowDown, Package, ShieldCheck, SwatchBook } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CategoryCardsGrid } from "@/components/CategoryCardsGrid";
 import { collections, images } from "@/lib/catalog";
+import fabricChoiceGlow from "@/assets/fabric-section-glow.webp";
 import { SectionTitle } from "@/components/SectionTitle";
 import { FabricChoiceSection } from "@/components/FabricChoiceSection";
 import { InteriorStrip } from "@/components/InteriorStrip";
 import { Button } from "@/components/ui/button";
 import { useHeroParallax } from "@/hooks/use-hero-parallax";
+import { useFabricStickyTrackHeight } from "@/hooks/use-fabric-sticky-track-height";
 import { smoothScrollToId } from "@/lib/smooth-scroll";
 
 export const Route = createFileRoute("/")({
@@ -30,8 +32,11 @@ function Index() {
   const heroMediaRef = useRef<HTMLDivElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
   const heroScrimRef = useRef<HTMLDivElement>(null);
+  const brandImageRef = useRef<HTMLDivElement>(null);
+  const brandStickyTrackRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   useHeroParallax(heroRef, heroMediaRef, heroContentRef, heroScrimRef);
+  useFabricStickyTrackHeight(brandImageRef, brandStickyTrackRef);
 
   useEffect(() => {
     const hash = location.hash?.replace(/^#/, "") || window.location.hash.replace(/^#/, "");
@@ -103,7 +108,7 @@ function Index() {
         <div className="page-wrap">
           <div className="relative z-10 -translate-y-1 flex items-center gap-6 md:-translate-y-1.5">
             <SectionTitle regular="Коллекции" italic="мебели" />
-            <span className="hidden h-px flex-1 bg-olive/25 md:block" />
+            <span className="hidden h-px flex-1 bg-olive/12 md:block" />
           </div>
           <div className="mt-10 grid items-center gap-5 md:grid-cols-[1fr_1.16fr_1fr]">
             {collections.map((collection, i) => (
@@ -111,7 +116,7 @@ function Index() {
                 <Link
                   to="/collection/$slug"
                   params={{ slug: collection.slug }}
-                  className={`group relative block overflow-hidden rounded-[26px] shadow-none transition duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-24px_rgba(41,39,35,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-olive focus-visible:ring-offset-2 focus-visible:ring-offset-surface-soft ${i === 1 ? "aspect-[4/5] md:-mt-5" : "aspect-[4/4.5]"}`}
+                  className={`group relative block overflow-hidden rounded-[26px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-olive focus-visible:ring-offset-2 focus-visible:ring-offset-surface-soft ${i === 1 ? "aspect-[4/5] md:-mt-5" : "aspect-[4/4.5]"}`}
                 >
                   <img
                     src={collection.image}
@@ -119,20 +124,20 @@ function Index() {
                     loading="lazy"
                     width={1200}
                     height={1008}
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                   />
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-[linear-gradient(to_top,rgba(0,0,0,0.4)_0%,transparent_40%)] transition-[height] duration-500 group-hover:h-[42%]"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-[52%] bg-[linear-gradient(to_top,rgba(41,39,35,0.46)_0%,rgba(41,39,35,0.18)_42%,transparent_88%)]"
                   />
-                  <div className="absolute inset-x-0 bottom-0 p-5 text-[#F5F1EA]/72 transition-[color] duration-500 group-hover:text-[#F5F1EA]/88 group-focus-visible:text-[#F5F1EA]/88 md:px-6 md:pb-6 md:pt-10">
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-[#F5F1EA] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1 group-focus-visible:-translate-y-1 md:px-6 md:pb-6 md:pt-10">
                     <h3 className="font-display text-[clamp(1.875rem,2.8vw,2.25rem)] font-medium leading-tight">
                       {collection.name}
                     </h3>
-                    <p className="mt-2 text-sm font-medium leading-relaxed opacity-90 transition-all duration-500 md:mt-0 md:max-h-0 md:overflow-hidden md:opacity-0 md:group-hover:mt-2 md:group-hover:max-h-24 md:group-hover:opacity-100 md:group-focus-visible:mt-2 md:group-focus-visible:max-h-24 md:group-focus-visible:opacity-100">
+                    <p className="mt-2 text-sm font-medium leading-relaxed text-[#F5F1EA]/88">
                       {collection.tagline}
                     </p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium uppercase tracking-[0.07em] md:mt-0 md:max-h-0 md:overflow-hidden md:opacity-0 md:transition-all md:duration-500 md:delay-75 md:group-hover:mt-3 md:group-hover:max-h-8 md:group-hover:opacity-100 md:group-focus-visible:mt-3 md:group-focus-visible:max-h-8 md:group-focus-visible:opacity-100">
+                    <span className="mt-3 inline-flex items-center text-xs font-medium uppercase tracking-[0.07em] text-[#F5F1EA]/80 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-focus-visible:translate-x-1">
                       Смотреть →
                     </span>
                   </div>
@@ -143,49 +148,65 @@ function Index() {
         </div>
       </ScrollReveal>
 
-      <ScrollReveal as="section" className="page-wrap section-pad-compact grid items-center gap-10 lg:grid-cols-2">
-        <div>
-          <SectionTitle regular="Там, где страсть" italic="встречается с опытом" />
-          <p className="mt-7 max-w-xl text-sm leading-7 text-copy">
-            Мы создаём мебель, в которой продуманы ощущения, пропорции и каждый материал. Спокойный дизайн помогает
-            ей естественно жить в самых разных интерьерах.
-          </p>
-          <div className="mt-9 space-y-5">
-            {[
-              [SwatchBook, "Бесплатные образцы тканей"],
-              [Package, "Бесплатная доставка"],
-              [ShieldCheck, "25 лет опыта производства"],
-            ].map(([Icon, label], i) => {
-              const I = Icon as typeof SwatchBook;
-              return (
-                <ScrollReveal key={label as string} delay={i * 100}>
-                  <div className="flex items-center gap-4">
-                    <span className="grid size-11 place-items-center rounded-full bg-olive text-primary-foreground">
-                      <I className="size-5" />
+      <section className="section-pad-compact overflow-x-clip">
+        <div className="page-wrap grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start lg:gap-x-[clamp(2.5rem,5vw,5.5rem)]">
+          <div ref={brandStickyTrackRef} className="relative z-[1]">
+            <div className="lg:sticky lg:top-28">
+              <SectionTitle regular="Там, где страсть" italic="встречается с опытом" />
+              <p className="mt-10 max-w-[28rem] text-sm leading-7 text-copy">
+                Мы создаём мебель, в которой продуманы ощущения, пропорции и каждый материал. Спокойный дизайн помогает
+                ей естественно жить в самых разных интерьерах.
+              </p>
+              <div className="mt-12 max-w-[22rem]">
+                <p className="font-display text-[clamp(3.75rem,8.5vw,5.5rem)] font-medium leading-[0.85] tracking-tight text-foreground">
+                  25
+                </p>
+                <p className="mt-3 font-display text-[1.25rem] font-medium leading-snug text-foreground md:text-[1.45rem]">
+                  лет опыта производства
+                </p>
+              </div>
+              <p className="mt-10 max-w-[28rem] border-t border-foreground/10 pt-6 text-[0.68rem] font-medium uppercase leading-relaxed tracking-[0.16em] text-copy">
+                Бесплатные образцы тканей
+                <span className="mx-3 text-olive/40" aria-hidden>
+                  ·
+                </span>
+                Бесплатная доставка
+              </p>
+              <div className="mt-10">
+                <Button variant="warm" asChild>
+                  <Link to="/about" className="group">
+                    Узнать больше о «Форме»
+                    <span
+                      aria-hidden
+                      className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-0.5"
+                    >
+                      →
                     </span>
-                    <span className="text-sm">{label as string}</span>
-                  </div>
-                </ScrollReveal>
-              );
-            })}
+                  </Link>
+                </Button>
+              </div>
+            </div>
           </div>
-          <ScrollReveal delay={320} className="mt-10">
-            <Button variant="warm" size="lg" asChild>
-              <Link to="/about">Узнать больше о «Форме»</Link>
-            </Button>
-          </ScrollReveal>
+          <div className="relative">
+            <div
+              aria-hidden
+              className="fabric-choice-text-glow fabric-choice-text-glow-from-end motion-reduce:hidden hidden lg:block"
+            >
+              <img src={fabricChoiceGlow} alt="" />
+            </div>
+            <div ref={brandImageRef} className="group relative z-[1] overflow-hidden rounded-[14px]">
+              <img
+                src={images.lifestyle}
+                alt="Дом с мебелью Форма"
+                loading="lazy"
+                width={1200}
+                height={1008}
+                className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
+              />
+            </div>
+          </div>
         </div>
-        <ScrollReveal delay={120} className="flex justify-center lg:justify-end">
-          <img
-            src={images.lifestyle}
-            alt="Дом с мебелью Форма"
-            loading="lazy"
-            width={1200}
-            height={1008}
-            className="aspect-[4/5] w-[92%] max-w-full rounded-[28px] object-cover sm:w-[90%] lg:ml-auto lg:w-[86%]"
-          />
-        </ScrollReveal>
-      </ScrollReveal>
+      </section>
 
       <FabricChoiceSection />
 
