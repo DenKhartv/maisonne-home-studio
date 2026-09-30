@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { CatalogSortSelect } from "@/components/CatalogSortSelect";
 import { ProductCard } from "@/components/ProductCard";
-import { products } from "@/lib/catalog";
+import { products, sortProducts, type CatalogSort } from "@/lib/catalog";
 
 export const Route = createFileRoute("/furniture")({
   head: () => ({
@@ -18,14 +19,8 @@ export const Route = createFileRoute("/furniture")({
 });
 
 function FurniturePage() {
-  const [sort, setSort] = useState("popular");
-  const items = useMemo(
-    () =>
-      sort === "price"
-        ? [...products].sort((a, b) => Number(a.price.replace(/\D/g, "")) - Number(b.price.replace(/\D/g, "")))
-        : products,
-    [sort],
-  );
+  const [sort, setSort] = useState<CatalogSort>("default");
+  const items = useMemo(() => sortProducts(products, sort), [sort]);
 
   return (
     <div className="page-wrap pb-20 pt-32 md:pb-24 md:pt-36">
@@ -35,13 +30,7 @@ function FurniturePage() {
         Весь ассортимент — диваны, кровати, кресла и другие предметы в спокойном современном дизайне.
       </p>
       <div className="mt-8 mb-6 flex flex-wrap items-center justify-end border-y border-border py-3 text-sm">
-        <label>
-          Сортировать по:{" "}
-          <select value={sort} onChange={(e) => setSort(e.target.value)} className="bg-transparent font-medium outline-none">
-            <option value="popular">Популярные</option>
-            <option value="price">Сначала дешевле</option>
-          </select>
-        </label>
+        <CatalogSortSelect value={sort} onChange={setSort} />
       </div>
       <div className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((product) => (

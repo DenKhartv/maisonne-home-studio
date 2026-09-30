@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 
 /**
- * Home: hidden on first paint at top; scroll down hides; scroll up shows (including at scrollY=0).
- * Other pages: visible at top; scroll down hides, scroll up shows.
+ * Visible on first paint (all pages). Scroll down hides; scroll up shows.
+ * Home at scrollY=0 still follows direction so the bar can hide as soon as the user starts scrolling down.
  */
 export function usePromoBarVisible(isHome: boolean): boolean {
-  const [visible, setVisible] = useState(() => (isHome ? false : true));
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (isHome) {
-      setVisible(false);
-    } else {
-      setVisible(window.scrollY <= 0);
-    }
+    setVisible(window.scrollY <= 0);
 
     let lastScrollY = window.scrollY;
 

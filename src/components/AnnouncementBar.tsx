@@ -49,16 +49,22 @@ export function AnnouncementBar({ visible, isHome = false }: AnnouncementBarProp
       )}
       style={{ height: ANNOUNCEMENT_BAR_HEIGHT_PX }}
     >
-      <div className="page-wrap relative flex h-full items-center justify-center px-10 sm:px-12">
+      <div className="page-wrap grid h-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3">
+        <span
+          aria-hidden
+          className="invisible whitespace-nowrap font-sans text-[10px] tabular-nums tracking-wide sm:text-[11px]"
+        >
+          {MESSAGES.length} / {MESSAGES.length}
+        </span>
         <p
           className={cn(
-            "max-w-[min(100%,42rem)] text-balance text-center font-sans text-[11px] font-normal leading-snug tracking-[0.06em] text-foreground/85 transition-opacity duration-300 ease-out sm:text-xs",
+            "w-full min-w-0 max-w-[42rem] justify-self-center text-balance text-center font-sans text-[11px] font-normal leading-tight tracking-[0.06em] text-foreground/85 transition-opacity duration-300 ease-out sm:text-xs",
             !messageVisible && "opacity-0",
           )}
         >
           {MESSAGES[index]}
         </p>
-        <p className="absolute right-0 top-1/2 -translate-y-1/2 font-sans text-[10px] tabular-nums tracking-wide text-foreground/45 sm:text-[11px]">
+        <p className="whitespace-nowrap justify-self-end font-sans text-[10px] tabular-nums tracking-wide text-foreground/45 sm:text-[11px]">
           {index + 1} / {MESSAGES.length}
         </p>
       </div>

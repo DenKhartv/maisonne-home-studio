@@ -10,7 +10,6 @@ import { FabricChoiceSection } from "@/components/FabricChoiceSection";
 import { InteriorStrip } from "@/components/InteriorStrip";
 import { Button } from "@/components/ui/button";
 import { useHeroParallax } from "@/hooks/use-hero-parallax";
-import { useFabricStickyTrackHeight } from "@/hooks/use-fabric-sticky-track-height";
 import { smoothScrollToId } from "@/lib/smooth-scroll";
 
 export const Route = createFileRoute("/")({
@@ -32,11 +31,8 @@ function Index() {
   const heroMediaRef = useRef<HTMLDivElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
   const heroScrimRef = useRef<HTMLDivElement>(null);
-  const brandImageRef = useRef<HTMLDivElement>(null);
-  const brandStickyTrackRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   useHeroParallax(heroRef, heroMediaRef, heroContentRef, heroScrimRef);
-  useFabricStickyTrackHeight(brandImageRef, brandStickyTrackRef);
 
   useEffect(() => {
     const hash = location.hash?.replace(/^#/, "") || window.location.hash.replace(/^#/, "");
@@ -149,10 +145,9 @@ function Index() {
       </ScrollReveal>
 
       <section className="section-pad-compact overflow-x-clip">
-        <div className="page-wrap grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start lg:gap-x-[clamp(2.5rem,5vw,5.5rem)]">
-          <div ref={brandStickyTrackRef} className="relative z-[1]">
-            <div className="lg:sticky lg:top-28">
-              <SectionTitle regular="Там, где страсть" italic="встречается с опытом" />
+        <div className="page-wrap grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-stretch lg:gap-x-[clamp(2.5rem,5vw,5.5rem)]">
+          <div className="relative z-[1]">
+            <SectionTitle regular="Там, где страсть" italic="встречается с опытом" />
               <p className="mt-10 max-w-[28rem] text-sm leading-7 text-copy">
                 Мы создаём мебель, в которой продуманы ощущения, пропорции и каждый материал. Спокойный дизайн помогает
                 ей естественно жить в самых разных интерьерах.
@@ -185,23 +180,22 @@ function Index() {
                   </Link>
                 </Button>
               </div>
-            </div>
           </div>
-          <div className="relative">
+          <div className="relative min-h-[16rem] lg:min-h-0">
             <div
               aria-hidden
               className="fabric-choice-text-glow fabric-choice-text-glow-from-end motion-reduce:hidden hidden lg:block"
             >
               <img src={fabricChoiceGlow} alt="" />
             </div>
-            <div ref={brandImageRef} className="group relative z-[1] overflow-hidden rounded-[14px]">
+            <div className="group relative z-[1] h-full overflow-hidden rounded-[14px] max-lg:aspect-[4/5]">
               <img
                 src={images.lifestyle}
                 alt="Дом с мебелью Форма"
                 loading="lazy"
                 width={1200}
                 height={1008}
-                className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
+                className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
               />
             </div>
           </div>

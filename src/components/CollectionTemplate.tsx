@@ -1,18 +1,24 @@
+import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { InteriorStrip } from "@/components/InteriorStrip";
-import { getCollectionProducts, type Collection, type Product } from "@/lib/catalog";
+import { CatalogSortSelect } from "@/components/CatalogSortSelect";
+import { getCollectionProducts, sortProducts, type CatalogSort, type Collection, type Product } from "@/lib/catalog";
 
 type CollectionTemplateProps = {
   collection: Collection;
 };
 
 export function CollectionTemplate({ collection }: CollectionTemplateProps) {
-  const items = getCollectionProducts(collection.slug);
+  const [sort, setSort] = useState<CatalogSort>("default");
+  const items = useMemo(
+    () => sortProducts(getCollectionProducts(collection.slug), sort),
+    [collection.slug, sort],
+  );
 
   return (
     <>
-      <section className="page-wrap relative mt-24 overflow-hidden rounded-t-[28px] rounded-b-[14px] md:mt-28">
+      <section className="page-wrap relative mt-24 overflow-hidden rounded-t-[28px] rounded-b-[12px] md:mt-28">
         <div className="relative h-[42vh] min-h-[280px] md:h-[48vh] md:min-h-[360px]">
           <img
             src={collection.image}
@@ -35,11 +41,14 @@ export function CollectionTemplate({ collection }: CollectionTemplateProps) {
         </div>
       </section>
 
-      <section className="page-wrap pb-20 pt-5 md:pb-28 md:pt-6">
-        <h2 className="font-display text-3xl font-medium tracking-tight md:text-5xl md:font-semibold">
-          Предметы коллекции
-        </h2>
-        <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-14 md:mt-8 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
+      <section className="page-wrap pb-20 pt-8 md:pb-28 md:pt-10">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+          <h2 className="font-display text-2xl font-medium tracking-tight md:text-4xl md:font-semibold">
+            Предметы коллекции
+          </h2>
+          <CatalogSortSelect value={sort} onChange={setSort} className="shrink-0 text-sm text-copy" />
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-14 md:mt-10 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
           {items.map((product) => (
             <CollectionProductCard key={product.slug} product={product} />
           ))}

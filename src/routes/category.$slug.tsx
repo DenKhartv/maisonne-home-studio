@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { getCategory, products, sofaSeatFilters, type SofaSeats } from "@/lib/catalog";
+import { getCategory, products, sofaSeatFilters, sortProducts, type CatalogSort, type SofaSeats } from "@/lib/catalog";
+import { CatalogSortSelect } from "@/components/CatalogSortSelect";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -33,14 +34,12 @@ function CategoryPage() {
   const category = Route.useLoaderData();
   const { seats } = Route.useSearch();
   const [expanded, setExpanded] = useState(false);
-  const [sort, setSort] = useState("popular");
+  const [sort, setSort] = useState<CatalogSort>("default");
   const items = useMemo(() => {
     const matching = products.filter((p) => p.category === category.slug);
     const filtered =
       category.slug === "sofas" && seats ? matching.filter((p) => p.seats === seats) : matching;
-    return sort === "price"
-      ? [...filtered].sort((a, b) => Number(a.price.replace(/\D/g, "")) - Number(b.price.replace(/\D/g, "")))
-      : filtered;
+    return sortProducts(filtered, sort);
   }, [category.slug, sort, seats]);
   return (
     <div className="page-wrap pb-20 pt-32 md:pb-24 md:pt-36">
@@ -97,13 +96,7 @@ function CategoryPage() {
         </div>
       )}
       <div className="mt-8 mb-6 flex flex-wrap items-center justify-end border-y border-border py-3 text-sm">
-        <label>
-          Сортировать по:{" "}
-          <select value={sort} onChange={(e) => setSort(e.target.value)} className="bg-transparent font-medium outline-none">
-            <option value="popular">Популярные</option>
-            <option value="price">Сначала дешевле</option>
-          </select>
-        </label>
+        <CatalogSortSelect value={sort} onChange={setSort} />
       </div>
       <div className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((product) => (

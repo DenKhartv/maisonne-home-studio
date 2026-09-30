@@ -92,6 +92,15 @@ export const getCategory = (slug: string) => categories.find((item) => item.slug
 export const getCollection = (slug: string) => collections.find((item) => item.slug === slug);
 export const getProduct = (slug: string) => products.find((item) => item.slug === slug);
 
+export type CatalogSort = "default" | "price-asc" | "price-desc";
+
+export function sortProducts<T extends { price: string }>(items: readonly T[], sort: CatalogSort): T[] {
+  const value = (item: T) => Number(item.price.replace(/\D/g, ""));
+  if (sort === "price-asc") return [...items].sort((a, b) => value(a) - value(b));
+  if (sort === "price-desc") return [...items].sort((a, b) => value(b) - value(a));
+  return [...items];
+}
+
 export function getCollectionProducts(collectionSlug: string) {
   return products.filter((product) => product.collection === collectionSlug);
 }
