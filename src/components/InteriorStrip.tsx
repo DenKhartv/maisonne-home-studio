@@ -8,7 +8,7 @@ export type InteriorStripProps = {
   eyebrow?: string;
   /** Первая строка заголовка (или legacy `title`) */
   title?: string;
-  /** Вторая строка курсивом (или legacy `italic`) */
+  /** Вторая строка заголовка (или legacy `italic`) */
   italic?: string;
   description?: string;
   works?: PortfolioWork[];
@@ -34,7 +34,7 @@ export function InteriorStrip({
         <h2 className="font-display text-[clamp(2.25rem,5vw,5rem)] font-medium leading-[1.08] md:font-semibold">
           {title}
           <br />
-          <em className="font-accent text-[var(--stage-dark-accent)]">{italic}</em>
+          <span className="text-[var(--stage-dark-accent)]">{italic}</span>
         </h2>
         <p className="max-w-[23rem] text-sm leading-7 text-primary-foreground/78 lg:justify-self-end">{description}</p>
       </div>

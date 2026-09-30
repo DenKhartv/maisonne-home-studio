@@ -62,8 +62,7 @@ function CartPage() {
               <Link to="/checkout">Оформить заказ</Link>
             </Button>
             <Link
-              to="/category/$slug"
-              params={{ slug: "sofas" }}
+              to="/furniture"
               className="mt-5 inline-block text-sm underline underline-offset-4"
             >
               Продолжить покупки
@@ -78,8 +77,7 @@ function CartPage() {
           <p className="text-lg font-medium">Корзина пуста</p>
           <p className="mt-3 text-sm leading-7 text-copy">Добавьте понравившиеся предметы, чтобы оформить заказ.</p>
           <Link
-            to="/category/$slug"
-            params={{ slug: "sofas" }}
+            to="/furniture"
             className="mt-8 inline-block text-sm underline underline-offset-4"
           >
             Перейти к мебели

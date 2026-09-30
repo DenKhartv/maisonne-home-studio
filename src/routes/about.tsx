@@ -30,7 +30,7 @@ function AboutPage() {
           className="h-full max-h-[720px] w-full rounded-[28px] object-cover"
         />
         <div className="flex flex-col justify-center lg:px-12">
-          <p className="font-accent text-3xl leading-snug text-foreground">
+          <p className="font-display text-3xl font-medium leading-snug text-foreground">
             Мы создаём мебель, с которой повседневная жизнь становится мягче и спокойнее.
           </p>
           <p className="mt-8 text-sm leading-7 text-copy">

@@ -184,8 +184,7 @@
 
   /*
    * Lora + Manrope (editorial + UI)
-   * .font-display  → Lora — крупные заголовки, hero, секции
-   * .font-accent   → Lora Italic — акцентная строка в заголовках, цитаты
+   * .font-display  → Lora — крупные заголовки, hero, секции, акцентные строки
    * .font-logo     → Manrope — компактный логотип в шапке
    * body, кнопки, меню, карточки → Manrope (Regular / Medium)
    */
@@ -197,14 +196,6 @@
   /* Manrope — логотип «Форма» */
   .font-logo {
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: 0;
-  }
-
-  /* Lora Italic — коллекции, цитаты, акценты */
-  .font-accent {
-    font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
-    font-style: italic;
-    font-weight: 400;
     letter-spacing: 0;
   }
 

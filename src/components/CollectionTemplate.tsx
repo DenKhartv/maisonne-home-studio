@@ -12,18 +12,18 @@ export function CollectionTemplate({ collection }: CollectionTemplateProps) {
 
   return (
     <>
-      <section className="page-wrap relative mt-24 overflow-hidden rounded-[28px] md:mt-28">
-        <div className="relative h-[66vh] min-h-[520px] md:h-[72vh]">
+      <section className="page-wrap relative mt-24 overflow-hidden rounded-t-[28px] rounded-b-[14px] md:mt-28">
+        <div className="relative h-[42vh] min-h-[280px] md:h-[48vh] md:min-h-[360px]">
           <img
             src={collection.image}
             alt={`Коллекция ${collection.name}`}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-[center_42%]"
           />
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-coffee/70 via-coffee/15 to-transparent"
           />
-          <div className="absolute inset-x-0 bottom-0 p-8 text-primary-foreground md:p-16">
+          <div className="absolute inset-x-0 bottom-0 p-6 text-primary-foreground md:p-10">
             <p className="text-xs font-medium uppercase tracking-[0.08em] text-primary-foreground/80">Коллекция</p>
             <h1 className="font-display mt-4 max-w-[12ch] text-6xl font-medium leading-[0.92] tracking-tight md:text-8xl md:font-semibold">
               {collection.name}
@@ -35,21 +35,11 @@ export function CollectionTemplate({ collection }: CollectionTemplateProps) {
         </div>
       </section>
 
-      <section className="page-wrap section-pad-compact">
-        <p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">О коллекции</p>
-        <h2 className="font-display mt-5 text-4xl font-medium tracking-tight md:text-6xl md:font-semibold">
-          {collection.name}
-        </h2>
-        <p className="mt-6 max-w-xl text-sm leading-7 text-copy md:text-base md:leading-8">
-          {collection.tagline}
-        </p>
-      </section>
-
-      <section className="page-wrap pb-20 pt-6 md:pb-28 md:pt-10">
-        <h2 className="font-display text-4xl font-medium tracking-tight md:text-6xl md:font-semibold">
+      <section className="page-wrap pb-20 pt-5 md:pb-28 md:pt-6">
+        <h2 className="font-display text-3xl font-medium tracking-tight md:text-5xl md:font-semibold">
           Предметы коллекции
         </h2>
-        <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-14 md:mt-14 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
+        <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-14 md:mt-8 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
           {items.map((product) => (
             <CollectionProductCard key={product.slug} product={product} />
           ))}

@@ -80,6 +80,7 @@ export function SiteHeader({ topOffsetPx = 0 }: SiteHeaderProps) {
     ].join(" ");
 
   const isFurnitureSection =
+    location.pathname.startsWith("/furniture") ||
     location.pathname.startsWith("/category") ||
     location.pathname.startsWith("/product") ||
     location.pathname.startsWith("/collection");

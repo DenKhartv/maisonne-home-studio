@@ -43,12 +43,22 @@ function CategoryPage() {
       : filtered;
   }, [category.slug, sort, seats]);
   return (
-    <div className="page-wrap pb-28 pt-36 md:pt-44">
+    <div className="page-wrap pb-20 pt-32 md:pb-24 md:pt-36">
       <p className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">Каталог мебели</p>
-      <h1 className="font-display mt-4 text-6xl font-semibold md:text-8xl">{category.name}</h1>
-      <div className="mt-7 max-w-2xl text-sm leading-7 text-copy"><p>Продуманные формы, глубокий комфорт и спокойная палитра для интерьеров, в которых хочется оставаться.</p>{expanded && <p className="mt-3">Каждая модель создаётся с вниманием к пропорциям, долговечности и тактильным ощущениям. Выберите подходящую ткань и оттенок.</p>}<Button variant="link" className="px-0" onClick={() => setExpanded(!expanded)}>{expanded ? "Свернуть" : "Читать далее"}</Button></div>
+      <h1 className="font-display mt-3 text-6xl font-semibold md:mt-4 md:text-8xl">{category.name}</h1>
+      <div className="mt-4 max-w-2xl text-sm leading-7 text-copy md:mt-5">
+        <p>Продуманные формы, глубокий комфорт и спокойная палитра для интерьеров, в которых хочется оставаться.</p>
+        {expanded && (
+          <p className="mt-3">
+            Каждая модель создаётся с вниманием к пропорциям, долговечности и тактильным ощущениям. Выберите подходящую ткань и оттенок.
+          </p>
+        )}
+        <Button variant="link" className="mt-1 h-auto px-0 py-0" onClick={() => setExpanded(!expanded)}>
+          {expanded ? "Свернуть" : "Читать далее"}
+        </Button>
+      </div>
       {category.slug === "sofas" && (
-        <div className="mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:thin] md:grid md:grid-cols-4 md:gap-5 md:overflow-visible md:snap-none">
+        <div className="mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:thin] md:grid md:grid-cols-4 md:gap-5 md:overflow-visible md:snap-none">
           {sofaSeatFilters.map((filter) => {
             const active = seats === filter.id;
             return (
@@ -86,11 +96,25 @@ function CategoryPage() {
           })}
         </div>
       )}
-      <div className="my-12 flex flex-wrap justify-end gap-4 border-y border-border py-5 text-sm">
-        <label>Сортировать по: <select value={sort} onChange={(e) => setSort(e.target.value)} className="bg-transparent font-medium outline-none"><option value="popular">Популярные</option><option value="price">Сначала дешевле</option></select></label>
+      <div className="mt-8 mb-6 flex flex-wrap items-center justify-end border-y border-border py-3 text-sm">
+        <label>
+          Сортировать по:{" "}
+          <select value={sort} onChange={(e) => setSort(e.target.value)} className="bg-transparent font-medium outline-none">
+            <option value="popular">Популярные</option>
+            <option value="price">Сначала дешевле</option>
+          </select>
+        </label>
       </div>
-      <div className="grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{items.map((product) => <ProductCard key={product.slug} product={product} />)}</div>
-      <div className="mt-14 text-center"><Link to="/" className="text-sm underline underline-offset-4">Вернуться на главную</Link></div>
+      <div className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((product) => (
+          <ProductCard key={product.slug} product={product} />
+        ))}
+      </div>
+      <div className="mt-12 text-center">
+        <Link to="/" className="text-sm underline underline-offset-4">
+          Вернуться на главную
+        </Link>
+      </div>
     </div>
   );
 }

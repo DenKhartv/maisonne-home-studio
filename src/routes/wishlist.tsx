@@ -37,8 +37,7 @@ function WishlistPage() {
             Сохраняйте понравившиеся предметы, чтобы вернуться к ним позже.
           </p>
           <Link
-            to="/category/$slug"
-            params={{ slug: "sofas" }}
+            to="/furniture"
             className="mt-8 inline-block text-sm underline underline-offset-4"
           >
             Перейти к мебели

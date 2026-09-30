@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FurnitureRouteImport } from './routes/furniture'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as WishlistRouteImport } from './routes/wishlist'
@@ -44,6 +45,11 @@ const CheckoutRoute = CheckoutRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FurnitureRoute = FurnitureRouteImport.update({
+  id: '/furniture',
+  path: '/furniture',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/faq': typeof FaqRoute
+  '/furniture': typeof FurnitureRoute
   '/privacy': typeof PrivacyRoute
   '/search': typeof SearchRoute
   '/wishlist': typeof WishlistRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/faq': typeof FaqRoute
+  '/furniture': typeof FurnitureRoute
   '/privacy': typeof PrivacyRoute
   '/search': typeof SearchRoute
   '/wishlist': typeof WishlistRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/faq': typeof FaqRoute
+  '/furniture': typeof FurnitureRoute
   '/privacy': typeof PrivacyRoute
   '/search': typeof SearchRoute
   '/wishlist': typeof WishlistRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/faq'
+    | '/furniture'
     | '/privacy'
     | '/search'
     | '/wishlist'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/faq'
+    | '/furniture'
     | '/privacy'
     | '/search'
     | '/wishlist'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/faq'
+    | '/furniture'
     | '/privacy'
     | '/search'
     | '/wishlist'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
   FaqRoute: typeof FaqRoute
+  FurnitureRoute: typeof FurnitureRoute
   PrivacyRoute: typeof PrivacyRoute
   SearchRoute: typeof SearchRoute
   WishlistRoute: typeof WishlistRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/furniture': {
+      id: '/furniture'
+      path: '/furniture'
+      fullPath: '/furniture'
+      preLoaderRoute: typeof FurnitureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
   FaqRoute: FaqRoute,
+  FurnitureRoute: FurnitureRoute,
   PrivacyRoute: PrivacyRoute,
   SearchRoute: SearchRoute,
   WishlistRoute: WishlistRoute,

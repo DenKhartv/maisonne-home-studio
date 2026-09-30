@@ -38,17 +38,24 @@ export function FurnitureNavDropdown({ navLinkClass, isFurnitureSection }: Furni
   }, [location.pathname, location.hash]);
 
   useEffect(() => {
-    if (!isMobile || !open) return;
+    if (!open) return;
 
     const onPointerDown = (event: PointerEvent) => {
       if (!rootRef.current?.contains(event.target as Node)) {
         setOpen(false);
       }
     };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
 
     document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [isMobile, open]);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   const panel = (
     <div
@@ -101,7 +108,7 @@ export function FurnitureNavDropdown({ navLinkClass, isFurnitureSection }: Furni
                   onClick={close}
                   className="block rounded-xl px-2 py-2.5 transition hover:bg-secondary"
                 >
-                  <span className="font-accent block text-lg leading-tight text-foreground">{collection.name}</span>
+                  <span className="font-display block text-lg font-medium leading-tight text-foreground">{collection.name}</span>
                   <span className="mt-0.5 block text-xs leading-snug text-copy">{collection.tagline}</span>
                 </Link>
               </li>
@@ -116,44 +123,44 @@ export function FurnitureNavDropdown({ navLinkClass, isFurnitureSection }: Furni
     "absolute left-1/2 top-full z-50 w-[min(100vw-1.5rem,32rem)] -translate-x-1/2 pt-3";
 
   return (
-    <div ref={rootRef} className="relative inline-block">
-      <div
-        className="relative"
-        onMouseLeave={() => {
-          if (!isMobile) setOpen(false);
-        }}
-      >
+    <div
+      ref={rootRef}
+      className="relative inline-block"
+      onMouseEnter={() => {
+        if (!isMobile) setOpen(true);
+      }}
+      onMouseLeave={() => {
+        if (!isMobile) setOpen(false);
+      }}
+    >
+      <div className="relative z-[60] inline-flex items-center gap-1">
+        <Link to="/furniture" className={navLinkClass(isFurnitureSection)}>
+          Мебель
+        </Link>
         <button
           type="button"
-          className={cn(navLinkClass(isFurnitureSection), "inline-flex items-center gap-1")}
+          className={cn(navLinkClass(isFurnitureSection), "inline-flex items-center p-0")}
           aria-expanded={open}
           aria-haspopup="menu"
-          onMouseEnter={() => {
-            if (!isMobile) setOpen(true);
-          }}
+          aria-label="Категории мебели"
           onClick={() => {
-            if (isMobile) setOpen((value) => !value);
+            if (isMobile) {
+              setOpen((value) => !value);
+              return;
+            }
+            setOpen(true);
           }}
         >
-          Мебель
           <ChevronDown
             className={cn("size-3.5 transition-transform duration-200", open ? "rotate-180" : "rotate-0")}
             aria-hidden
           />
         </button>
-
-        <div
-          className={cn(
-            panelWrapClass,
-            "hidden md:block",
-            !open && "pointer-events-none",
-          )}
-        >
-          {panel}
-        </div>
       </div>
 
-      <div className={cn(panelWrapClass, "md:hidden", !open && "pointer-events-none")}>{panel}</div>
+      <div className={cn(panelWrapClass, !open && "pointer-events-none")} aria-hidden={!open}>
+        {panel}
+      </div>
     </div>
   );
 }

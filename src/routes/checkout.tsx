@@ -41,8 +41,7 @@ function CheckoutPage() {
           <p className="text-lg font-medium">Корзина пуста</p>
           <p className="mt-3 text-sm leading-7 text-copy">Добавьте предметы, чтобы оформить заказ.</p>
           <Link
-            to="/category/$slug"
-            params={{ slug: "sofas" }}
+            to="/furniture"
             className="mt-8 inline-block text-sm underline underline-offset-4"
           >
             Перейти к мебели
